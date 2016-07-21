@@ -1,4 +1,4 @@
-var Ship = function(){
+// var Ship = function(){
 
-}
-Ship.prototype.fire = function{}
+// }
+// Ship.prototype.fire = function{}

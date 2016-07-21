@@ -1,5 +1,45 @@
-  body {
-    -webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
+body {
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1,
+h2 {
+  text-align: center;
+}
+.spaceship{
+  background-image: url("../img/spaceshipIcon.png");
+  background-size: contain;
+  position: absolute;
+  width: 96px;
+  height: 96px;/*
+  transition: top 2s, left 2s;
+  transition-timing-function: linear; */
+}
+.alienship{
+  background-image: url("../img/alienship.svg");
+  background-size: contain;
+  width: 96px;
+  height: 96px;
+  background-color: blue;
+  position: absolute;
+}
+#controls-column{
+  width: 19%;
+  display: inline-block;
+  float: left;
+}
+#game-window{
+  width: 60%;
+  height: 400px;
+  display: inline-block;
+  background-image: url("../img/tmpback.jpg");
+}
+#hiscore-column{
+  width: 19%;
+  display: inline-block;
+  float: right;
+}
+.collide {
+  background-color: red;
+}
