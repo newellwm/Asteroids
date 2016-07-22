@@ -5,8 +5,8 @@
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
   <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/script.js" type="text/javascript" charset="utf-8" async defer></script>
   <script src="js/object.js" type="text/javascript" charset="utf-8" async defer></script>
+  <script src="js/script.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
 <body id="main-page">
   <div id="masthead">
@@ -22,9 +22,14 @@
     </ul>
   </div>
   <!-- end #controls-column -->
-  <div id="game-window">
+  <div id="game-frame">
+    <ul id="ship-health"></ul>
+    <ul id="ship-powerups"></ul>
+    <div id="game-window">
+    </div>
+    <!-- end #game-window -->
   </div>
-  <!-- end #game-window -->
+  <!-- end game-frame-->
   <div id="hiscore-column">
     <h2>Hiscores</h2>
     <ul id="hiscore-list">

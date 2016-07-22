@@ -12,9 +12,7 @@ h2 {
   background-size: contain;
   position: absolute;
   width: 96px;
-  height: 96px;/*
-  transition: top 2s, left 2s;
-  transition-timing-function: linear; */
+  height: 96px;
 }
 .alienship{
   background-image: url("../img/alienship.svg");
@@ -24,15 +22,42 @@ h2 {
   background-color: blue;
   position: absolute;
 }
+#ship-health{
+  margin: 0;
+  float: left;
+}
+#ship-powerups{
+  float: right;
+  margin: 0;
+  background-color: white;
+  height: 18px;
+}
+.health{
+  background-image: url("../img/favicon.ico");
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin: 0;
+}
+.airbrake{
+  background-image: url("../img/coffee.png");
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin: 0;
+}
 #controls-column{
   width: 19%;
   display: inline-block;
   float: left;
 }
-#game-window{
+#game-frame{
   width: 60%;
-  height: 400px;
+  height: 450px;
   display: inline-block;
+}
+#game-window{
+  height: 400px;
   background-image: url("../img/tmpback.jpg");
 }
 #hiscore-column{
