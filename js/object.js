@@ -9,20 +9,16 @@ var UserShip = function(){
   this.velocity = [0,0];
   this.position = [];
   this.angle=0;
+  this.accelAngle=0;
   this.time = Date.now();
   this.turn = 'stop';
-}
-UserShip.prototype.reset = function(){
-  this.health--;
-  this.invincible = true;
-  $spaceship.css({top: $gameWindow.offset().top+$gameWindow.innerHeight()/2-48,
-                 left: $gameWindow.offset().left+$gameWindow.innerWidth()/2-48});
+  this.imgSize = 32;
 }
 UserShip.prototype.create = function(){
   var $spaceship = $('<div class="spaceship id=user-ship">');
   //THE '48' VALUES ARE BASED FROM THE .CSS HEIGHT/WIDTH OF $spaceship
-  $spaceship.css({top: $gameWindow.offset().top+$gameWindow.innerHeight()/2-48,
-                 left: $gameWindow.offset().left+$gameWindow.innerWidth()/2-48});
+  $spaceship.css({top: $gameWindow.offset().top+$gameWindow.innerHeight()/2-this.imgSize,
+                 left: $gameWindow.offset().left+$gameWindow.innerWidth()/2-this.imgSize});
   this.position[0] = Number($spaceship.css('left').split('px').shift());
   this.position[1] = Number($spaceship.css('top').split('px').shift());
   for (var i=0;i<this.health;i++){
@@ -34,16 +30,25 @@ UserShip.prototype.create = function(){
   $gameWindow.append($spaceship);
   return($spaceship);
 }
-UserShip.prototype.setPosition = function(x,y,ship,dt){
-$(ship).animate({top: y,
-            left: x},dt);
+UserShip.prototype.reset = function(){
+  this.health--;
+  this.invincible = true;
+  $spaceship.css({top: $gameWindow.offset().top+$gameWindow.innerHeight()/2-this.imgSize,
+                 left: $gameWindow.offset().left+$gameWindow.innerWidth()/2-this.imgSize});
 }
-UserShip.prototype.setRotation = function(){
+UserShip.prototype.setPosition = function(x,y,ship,dt){
+$(ship).css({top: y,
+            left: x});
+}
+UserShip.prototype.setRotation = function($ship){
   switch (this.turn){
     case 'right':
-      this.
+      this.angle+=6;
+      $ship.css({transform: 'rotate('+this.angle+'deg)'})
       break;
     case 'left':
+      this.angle-=6;
+      $ship.css({transform: 'rotate('+this.angle+'deg)'})
       break;
   }
 }

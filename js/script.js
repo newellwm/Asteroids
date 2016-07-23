@@ -12,30 +12,20 @@ var eventListeners = function(){
     if(event.which==87){
       myShip.accelKeyPress = true;
     }
-  })
-  $(window).keyup(function(event){
-    if(event.which==87){
-      myShip.accelKeyPress = false;
-    }
-  })
-  //  Right
-  $(window).keydown(function(event){
     if(event.which==68){
       myShip.turn = 'right';
     }
-  })
-  $(window).keyup(function(event){
-    if(event.which==68){
-      myShip.turn = 'stop';
-    }
-  })
-  // Left
-  $(window).keydown(function(event){
     if(event.which==65){
       myShip.turn = 'left';
     }
   })
   $(window).keyup(function(event){
+    if(event.which==87){
+      myShip.accelKeyPress = false;
+    }
+    if(event.which==68){
+      myShip.turn = 'stop';
+    }
     if(event.which==65){
       myShip.turn = 'stop';
     }
@@ -57,23 +47,22 @@ var eventListeners = function(){
 // }else{
 //   //collision logic
 // }
-  var
-    myShip = new UserShip(),
-    myShipDiv = myShip.create();
+var
+  myShip = new UserShip(),
+  myShipDiv = myShip.create();
+
 
 var shipPosition = function(){
-//ACCELERATION on keypress pass boolean and t0 to ship object, on key release store
-  myShip.setRotation();
   var
     v0bar = myShip.velocity,
     d0bar = myShip.position,
-    theta = (myShip.angle+90)*Math.PI/180,
     d1bar = [],
     v1bar = [],
+    theta = 0,
     t1 = Date.now(),
     dt = t1-myShip.time,
-    acc = 1/4500,
-    maxV = 1/90,
+    acc = 1/6000,
+    maxV = 1/3,
     v0 =0,
     v1 = 0;
     if (v0bar[0]===0&&v0bar[1]===0){
@@ -81,47 +70,43 @@ var shipPosition = function(){
     }else{
       v0=Math.sqrt(Math.pow(v0bar[0],2)+Math.pow(v0bar[1],2));
     }
-                                                       //console.log(v0)
-  // if (theta>180){
-  //   theta-=180;
-  // }
-
+                                                      //console.log(v0);
   //ACCELERATION CONTROL && VELOCITY CALCS
+  //CURRENT BUG: SHIP CAN ABUSE MAGNITUDE OF DECCEL TO ACCEL FASTER
+  myShip.setRotation(myShipDiv);
   if (myShip.accelKeyPress === true){
+    theta = (myShip.angle+90)*Math.PI/180;
+    myShip.accelAngle = myShip.angle;
     if(v0>=maxV){
       v1 = maxV;
     }else{
       v1 = v0+dt*acc;
     }
-  }else if(v0 >= 0){
-    if(v0>=maxV){
-      v1 = maxV;
-    }else{
-      v1 = v0-dt*acc;
+  }else if(v0 > 0){
+    theta = (myShip.accelAngle+90)*Math.PI/180;
+    v1 = v0-dt*acc*3;
+    if (v1<0){
+      v1 = 0;
     }
   }
-                                                     // console.log(dt);
-                                                  // console.log(theta);
   v1bar[0] = v1*Math.cos(theta);
   v1bar[1] = v1*Math.sin(theta);
-  // if(v0bar[0]>0){
-  //   v0bar[0] = 0;
-  // }
-  // if(v0bar[1]>0){
-  //   v0bar[1] = 0;
-  // }
-  //UPDATE LOCATION
-                                              // console.log(d0bar+'d0')
-  d1bar[0] = d0bar[0]+dt*v1bar[0];
-  d1bar[1] = d0bar[1]+dt*v1bar[1];
+                                                     // console.log(dt);
+                                                  // console.log(theta);
+
+
+  //UPDATE LOCATION & WRITE UPDATES TO OBJECT
+  d1bar[0] = d0bar[0]-dt*v1bar[0];
+  d1bar[1] = d0bar[1]-dt*v1bar[1];
   myShip.setPosition(d0bar[0],d0bar[1],myShipDiv,dt);
   myShip.velocity = v1bar;
   myShip.position = d1bar;
   myShip.time = t1;
+                                                  console.log(d1bar);
 }
 
 $(function(){
-    eventListeners();
-    setInterval(shipPosition,50);
+  eventListeners();
+  setInterval(shipPosition,20);
 })
 

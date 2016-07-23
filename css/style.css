@@ -8,11 +8,11 @@ h2 {
   text-align: center;
 }
 .spaceship{
-  background-image: url("../img/spaceshipIcon.png");
+  background-image: url("../img/spaceship.png");
   background-size: contain;
   position: absolute;
-  width: 96px;
-  height: 96px;
+  width: 32px;
+  height: 32px;
 }
 .alienship{
   background-image: url("../img/alienship.svg");
@@ -20,6 +20,13 @@ h2 {
   width: 96px;
   height: 96px;
   background-color: blue;
+  position: absolute;
+}
+.asteroid{
+  background-image: url("../img/asteroid.png");
+  background-size: contain;
+  width: 32px;
+  height: 32px;
   position: absolute;
 }
 #ship-health{
