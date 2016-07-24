@@ -9,8 +9,8 @@
 //them in design.
 
 $(function(){
-  eventListeners();
-  spawnFourAsteroids();
-  setInterval(physux,20);
+  spawnUserShip();
+  spawnFourAsteroids();//currently makes 12 =)
+  setInterval(doPhysux,20);
 })
 

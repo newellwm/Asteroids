@@ -3,6 +3,7 @@ body {
   font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+/* ask nicely and I might just organize this =) */
 h1,
 h2 {
   text-align: center;
@@ -25,8 +26,15 @@ h2 {
 .asteroid{
   background-image: url("../img/asteroid.png");
   background-size: contain;
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+}
+.bullet{
+  background-image: url("../img/whiteBullet.png");
+  background-size: contain;
+  width: 20px;
+  height: 20px;
   position: absolute;
 }
 #ship-health{
@@ -53,12 +61,12 @@ h2 {
   display: inline-block;
   margin: 0;
 }
-.bullet{
-  background-image: url("../img/coffee.png");
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  margin: 0;
+.invincible {
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.0; }
 }
 #controls-column{
   width: 19%;
@@ -67,11 +75,11 @@ h2 {
 }
 #game-frame{
   width: 60%;
-  height: 450px;
+  height: 650px;
   display: inline-block;
 }
 #game-window{
-  height: 400px;
+  height: 600px;
   background-image: url("../img/tmpback.jpg");
 }
 #hiscore-column{
@@ -79,6 +87,6 @@ h2 {
   display: inline-block;
   float: right;
 }
-.collide {
-  background-color: red;
-}
+                                              .collide {
+                                                background-color: red;
+                                              }
