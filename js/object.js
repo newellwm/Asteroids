@@ -119,7 +119,7 @@ var $gameWindow = $('#game-window');
   Asteroid.prototype.collision = function(dt){
     this.position[0] -= dt*this.velocity[0];
     this.position[1] -= dt*this.velocity[1];
-    this.theta -= Math.PI/2;
+    this.theta -= Math.PI*3/4;
     this.velocity[0] = Math.cos(this.theta)*this.speed;
     this.velocity[1] = Math.sin(this.theta)*this.speed;
     this.position[0] += dt*this.velocity[0];
@@ -127,21 +127,29 @@ var $gameWindow = $('#game-window');
 
   }
   var Bullet = function(){
-    this.velocity = [0.5,0.5];
+    this.speed = 0.5
+    this.velocity = [0,0];
     this.position = [0,0];
     this.imgSize = 16;
     this.$bullet = {};
   }
   Bullet.prototype.create = function(source){
-    this.velocity[0] += source.velocity[0];
-    this.velocity[1] += source.velocity[1];
-    this.position = source.position;
+    //don't question it....
+    this.velocity[0] = this.speed
+                     * Math.cos((source.angle+90)*Math.PI/180)
+                     + source.velocity[0];
+    this.velocity[1] = this.speed
+                     * Math.sin((source.angle+90)*Math.PI/180)
+                     + source.velocity[1];
+    //broken phys was this.position = source.position
+    this.position[0] = source.position[0];
+    this.position[1] = source.position[1];
     this.$bullet = $('<div class="bullet">');
     this.$bullet.css({top:this.position[1],left:this.position[0]});
     $gameWindow.append(this.$bullet);
   }
   Bullet.prototype.setPosition = function($bullet){
-    $bullet.css({top: this.position[1], left: this.position[2]});
+    $bullet.css({top: this.position[1], left: this.position[0]});
   }
 
 //ENEMY SHIP OBJECT
