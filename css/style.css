@@ -88,6 +88,10 @@ h2 {
   display: inline-block;
   float: right;
 }
-                                              .collide {
-                                                background-color: red;
-                                              }
+#difficulty-settings{
+  display: inline-block;
+  margin: 0 35%;
+}
+#difficulty-settings li{
+  float: left;
+}

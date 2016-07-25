@@ -10,7 +10,16 @@
 
 $(function(){
   spawnUserShip();
-  spawnFourAsteroids();//currently makes 12 =)
+
+  $('#easy').on('click',function(){
+    spawnAsteroids(4);
+  });
+  $('#medium').on('click',function(){
+    spawnAsteroids(4);
+  });
+  $('#hard').on('click',function(){
+    spawnAsteroids(4);
+  });
   setInterval(doPhysux,20);
 })
 

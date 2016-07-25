@@ -5,8 +5,8 @@ var
   $asteroids = [];
   myShip = [];
   $myShip = [];
-var spawnFourAsteroids = function(){
-  for(var i=0;i<4;i++){
+var spawnAsteroids = function(input){
+  for(var i=0;i<input;i++){
     asteroids[i] = new Asteroid();
     asteroids[i].createRand();
   }
