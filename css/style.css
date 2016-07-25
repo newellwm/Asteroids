@@ -69,14 +69,15 @@ h2 {
   50% { opacity: 0.0; }
 }
 #controls-column{
-  width: 18%;
+  width: 20%;
   display: inline-block;
   float: left;
   padding: 5px;
+  text-align: center;
 }
 #game-frame{
   width: 60%;
-  height: 650px;
+  height: 620px;
   display: inline-block;
 }
 #game-window{
@@ -84,7 +85,7 @@ h2 {
   background-image: url("../img/tmpback.jpg");
 }
 #hiscore-column{
-  width: 18%;
+  width: 19%;
   display: inline-block;
   float: right;
 }
@@ -93,5 +94,9 @@ h2 {
   margin: 0 35%;
 }
 #difficulty-settings li{
+  margin: 0 10px;
   float: left;
+}
+li {
+  list-style-type: none;
 }
