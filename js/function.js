@@ -8,7 +8,7 @@ var
 var spawnFourAsteroids = function(){
   for(var i=0;i<4;i++){
     asteroids[i] = new Asteroid();
-    $asteroids[i] = asteroids[i].createRand();
+    asteroids[i].createRand();
   }
 }
 var spawnUserShip = function(){
@@ -46,6 +46,9 @@ var eventListeners = function(){
   $(window).keypress(function(event){
     if(event.which===32){
       myShip.shoot();
+    }
+    if(event.which===115){
+      myShip.airbrake();
     }
   })
 }
@@ -137,14 +140,20 @@ var doPhysux = function(){
     enableWorldWrap(asteroids[i].position, asteroids[i].imgSize);
   }
   for(var i=0;i<myShip.bullets.length;i++){
-    myShip.bullets[i].position[0] -=dt*myShip.bullets[i].velocity[0];
-    myShip.bullets[i].position[1] -=dt*myShip.bullets[i].velocity[1];
-    enableWorldWrap(myShip.bullets[i].position, myShip.bullets[i].imgSize);
-    myShip.bullets[i].setPosition(myShip.bullets[i].$bullet);
+    if (myShip.bullets[i].spawnTime > t1-750 === true){
+      myShip.bullets[i].position[0] -=dt*myShip.bullets[i].velocity[0];
+      myShip.bullets[i].position[1] -=dt*myShip.bullets[i].velocity[1];
+      enableWorldWrap(myShip.bullets[i].position, myShip.bullets[i].imgSize);
+      myShip.bullets[i].setPosition(myShip.bullets[i].$bullet);
+    }else{
+      myShip.bullets[i].remove(i);
+    }
   }
 
   // CHECK ALL ASTEROIDS FOR COLLISION WITH THEMSELVES & SHIP
   for (var i=asteroids.length-1;i>=0;i--){
+    if (asteroids.length ===3){
+    }
     for (var j=0;j<i;j++){
       collision = collisionCheck(asteroids[i],asteroids[j]);
       if (collision === true){
@@ -168,17 +177,23 @@ var doPhysux = function(){
     }else{
       shipCheck++;
     }
-    asteroids[i].setPosition($asteroids[i]);
+    asteroids[i].setPosition();
   }
   if (shipCheck === asteroids.length){
     myShip.setPosition();
     shipCheck = 0;
   }
+  // BULLET COLLISION CHECKS
+  for (var i=0;i<asteroids.length;i++){
+    for (var j=0;j<myShip.bullets.length;j++){
+      collision = collisionCheck(asteroids[i],myShip.bullets[j]);
+      if (collision === true){
+        asteroids[i].bulletHit(i);
+        myShip.bullets[j].remove(j);
+        collision = false;
+      }
+    }
+  }
 }
 
-
-
-
-// // CHECK FOR SHIP INVINCIBILITY
-// // Written before using Date.now for positioning, needs update
 

@@ -76,13 +76,21 @@ var $gameWindow = $('#game-window');
     bullet.create(this);
     this.bullets.push(bullet);
   }
+  UserShip.prototype.airbrake = function(){
+    if (this.airbrake > 0 === true){
+      this.airbrake--;
+      $('li').remove('.airbrake:last');
+      this.velocity = [0,0];
+    }
+  }
 //ASTEROID OBJECT
   var Asteroid = function(){
     this.size = 3;
-    this.health = 2;
+    this.health = 3;
     this.position = [0,0];//px
     this.imgSize = 48;
     this.velocity = [0,0];//px per ms (random 1/3 to 1/8)
+    this.$asteroids = {};
   }
   Asteroid.prototype.createRand = function(){
     //DOES NOT CHECK FOR OBJECTS ALREADY PLACED
@@ -109,17 +117,29 @@ var $gameWindow = $('#game-window');
     // maybe...
     $asteroid.css({top: randTop, left: randLeft});
     $gameWindow.append($asteroid);
-    return($asteroid);
+    this.$asteroid = $asteroid;
   }
-  Asteroid.prototype.setPosition = function($asteroid){
-    $asteroid.css({top: this.position[1], left: this.position[0]});
+  Asteroid.prototype.setPosition = function(){
+    this.$asteroid.css({top: this.position[1], left: this.position[0]});
   }
-  Asteroid.prototype.split = function(){
+  Asteroid.prototype.bulletHit = function(index){
+    this.health--;
+    this.imgSize = this.imgSize*Math.sqrt(0.5);
+    this.$asteroid.css({height:this.imgSize,width:this.imgSize});
+    this.velocity[0]+=1/16;
+    this.velocity[1]+=1/16;
+    if (this.health === 0){
+      this.$asteroid.remove();
+      asteroids.splice(index,1);
+      if (asteroids.length === 0){
+        alert('YOU WIN!');
+      }
+    }
   }
   Asteroid.prototype.collision = function(dt){
     this.position[0] -= dt*this.velocity[0];
     this.position[1] -= dt*this.velocity[1];
-    this.theta -= Math.PI*3/4;
+    this.theta -= Math.random()*Math.PI;
     this.velocity[0] = Math.cos(this.theta)*this.speed;
     this.velocity[1] = Math.sin(this.theta)*this.speed;
     this.position[0] += dt*this.velocity[0];
@@ -132,6 +152,7 @@ var $gameWindow = $('#game-window');
     this.position = [0,0];
     this.imgSize = 16;
     this.$bullet = {};
+    this.spawnTime = 0;
   }
   Bullet.prototype.create = function(source){
     //don't question it....
@@ -144,9 +165,14 @@ var $gameWindow = $('#game-window');
     //broken phys was this.position = source.position
     this.position[0] = source.position[0];
     this.position[1] = source.position[1];
+    this.spawnTime = source.time;
     this.$bullet = $('<div class="bullet">');
     this.$bullet.css({top:this.position[1],left:this.position[0]});
     $gameWindow.append(this.$bullet);
+  }
+  Bullet.prototype.remove = function(index){
+    this.$bullet.remove();
+    myShip.bullets.splice(index,1);
   }
   Bullet.prototype.setPosition = function($bullet){
     $bullet.css({top: this.position[1], left: this.position[0]});

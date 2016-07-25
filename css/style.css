@@ -69,9 +69,10 @@ h2 {
   50% { opacity: 0.0; }
 }
 #controls-column{
-  width: 19%;
+  width: 18%;
   display: inline-block;
   float: left;
+  padding: 5px;
 }
 #game-frame{
   width: 60%;
@@ -83,7 +84,7 @@ h2 {
   background-image: url("../img/tmpback.jpg");
 }
 #hiscore-column{
-  width: 19%;
+  width: 18%;
   display: inline-block;
   float: right;
 }
