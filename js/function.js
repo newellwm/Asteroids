@@ -31,15 +31,35 @@ var eventListeners = function(){
     if(event.which===65){
       myShip.turn = 'left';
     }
+    if(event.which===76){
+      myShip.turn = 'right';
+    }
+    //h
+    if(event.which===72){
+      myShip.turn = 'left';
+    }
+    if(event.which===74){
+      myShip.accelKeyPress = true;
+    }
+
   })
   $(window).keyup(function(event){
     if(event.which===87){
       myShip.accelKeyPress = false;
     }
+    if(event.which===74){
+      myShip.accelKeyPress = false;
+    }
+    if(event.which===76){
+      myShip.turn = 'stop';
+    }
     if(event.which===68){
       myShip.turn = 'stop';
     }
     if(event.which===65){
+      myShip.turn = 'stop';
+    }
+    if(event.which===72){
       myShip.turn = 'stop';
     }
   })
@@ -152,8 +172,6 @@ var doPhysux = function(){
 
   // CHECK ALL ASTEROIDS FOR COLLISION WITH THEMSELVES & SHIP
   for (var i=asteroids.length-1;i>=0;i--){
-    if (asteroids.length ===3){
-    }
     for (var j=0;j<i;j++){
       collision = collisionCheck(asteroids[i],asteroids[j]);
       if (collision === true){
