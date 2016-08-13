@@ -90,9 +90,8 @@ var eventListeners = function(){
       for ( var i = asteroids.length -1 ; i >=0 ; i -- ){
         asteroids[i].$asteroid.remove();
         asteroids.pop();
-        myShip.heal();
-        debugger;
       }
+      myShip.heal();
   });
 }
 
