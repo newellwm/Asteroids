@@ -2,13 +2,13 @@
 //but the thing is, I just don't care
 var
   asteroids = [],
-  $asteroids = [];
-  myShip = [];
+  myShip = [],
   $myShip = [];
 var spawnAsteroids = function(input){
-  for(var i=0;i<6;i++){
-    asteroids[i] = new Asteroid();
-    asteroids[i].createRand();
+  for(var i=0;i<input;i++){
+    var asteroid = new Asteroid();
+    asteroids.push(asteroid);
+    asteroids[asteroids.length-1].spawnRand();
   }
 }
 var spawnUserShip = function(){
@@ -34,12 +34,20 @@ var eventListeners = function(){
     if(event.which===76){
       myShip.turn = 'right';
     }
-    //h
     if(event.which===72){
       myShip.turn = 'left';
     }
     if(event.which===74){
       myShip.accelKeyPress = true;
+    }
+    if(event.which===83){
+      myShip.airBlast('stop');
+    }
+    if(event.which===69){
+      myShip.airBlast('right');
+    }
+    if(event.which===81){
+      myShip.airBlast('left');
     }
 
   })
@@ -67,10 +75,25 @@ var eventListeners = function(){
     if(event.which===32){
       myShip.shoot();
     }
-    if(event.which===115){
-      myShip.airbrake();
-    }
   })
+  $('#easy').on('click',function(){
+    spawnAsteroids(4);
+  });
+  $('#medium').on('click',function(){
+    spawnAsteroids(6);
+  });
+  $('#hard').on('click',function(){
+    spawnAsteroids(8);
+  });
+
+  $('#clear').on('click',function(){
+      for ( var i = asteroids.length -1 ; i >=0 ; i -- ){
+        asteroids[i].$asteroid.remove();
+        asteroids.pop();
+        myShip.heal();
+        debugger;
+      }
+  });
 }
 
 var enableWorldWrap = function(pos,imgSize){
@@ -96,13 +119,13 @@ var collisionCheck = function(first,second){
     firstRadius = first.imgSize/2,
     secondRadius = second.imgSize/2,
     firstCenter = [first.position[0]+firstRadius,
-                   first.position[1]+firstRadius]
+                   first.position[1]+firstRadius],
     secondCenter = [second.position[0]+secondRadius,
                     second.position[1]+secondRadius],
     dx = firstCenter[0]-secondCenter[0],
     dy = firstCenter[1]-secondCenter[1],
     distance = Math.sqrt(dx*dx+dy*dy);
-    if (distance < firstRadius+secondRadius === true){
+    if (distance < firstRadius+secondRadius){
       return true;
     }else{
       return false;
@@ -121,7 +144,7 @@ var doPhysux = function(){
     v1 = 0,
     collision = false
     shipCheck = 0;
-
+    console.log(dt);
   //ACCELERATION,VELOCITY, AND POSITION CALCS FOR USER SHIP
   //KNOWN BUG: SHIP CAN ABUSE DECCEL ON TURN TO ACCEL IN NEW DIR. FASTER
   if (myShip.velocity[0]===0&&myShip.velocity[1]===0){

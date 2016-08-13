@@ -4,7 +4,7 @@ var $gameWindow = $('#game-window');
 //PLAYER SHIP OBJECT
   var UserShip = function(){
     this.health = 3;
-    this.airbrake = 3;
+    this.airBlast = 3;
     this.invincible = true;
     this.accelKeyPress = false;
     this.velocity = [0,0];//px per ms
@@ -21,9 +21,9 @@ var $gameWindow = $('#game-window');
     var
       $spaceship = $('<div class="spaceship id=user-ship">'),
       midTop = $gameWindow.offset().top
-              +$gameWindow.innerHeight()/2-this.imgSize,
+             + $gameWindow.innerHeight()/2-this.imgSize,
       midLeft = $gameWindow.offset().left
-               +$gameWindow.innerWidth()/2-this.imgSize;
+              + $gameWindow.innerWidth()/2-this.imgSize;
 
     this.position[0] = midLeft;
     this.position[1] = midTop;
@@ -32,9 +32,9 @@ var $gameWindow = $('#game-window');
     $spaceship.css({top: midTop, left: midLeft});
     for (var i=0;i<this.health;i++){
         var $health = $('<li class="health">');
-        var $airbrake = $('<li class="airbrake">');
+        var $airBlast = $('<li class="airblast">');
         $('#ship-health').append($health);
-        $('#ship-powerups').append($airbrake);
+        $('#ship-powerups').append($airBlast);
     }
     $gameWindow.append($spaceship);
     return($spaceship);
@@ -76,11 +76,21 @@ var $gameWindow = $('#game-window');
     bullet.create(this);
     this.bullets.push(bullet);
   }
-  UserShip.prototype.airbrake = function(){
-    if (this.airbrake > 0 === true){
-      this.airbrake--;
-      $('li').remove('.airbrake:last');
+  UserShip.prototype.useairBlast = function(){
+//add left and right airblasts
+    if (this.airBlast > 0 === true){
+      this.airBlast--;
+      $('li').remove('.airblast:last');
       this.velocity = [0,0];
+    }
+  }
+  UserShip.prototype.heal = function(){
+    if (this.health < 3) {
+      for ( var i = this.health ; i < 3 ; i ++ ) {
+        this.health ++;
+        var $health = $('<li class="health">');
+        $('#ship-health').append($health);
+      }
     }
   }
 //ASTEROID OBJECT
@@ -92,7 +102,7 @@ var $gameWindow = $('#game-window');
     this.velocity = [0,0];//px per ms (random 1/3 to 1/8)
     this.$asteroids = {};
   }
-  Asteroid.prototype.createRand = function(){
+  Asteroid.prototype.spawnRand = function(){
     //DOES NOT CHECK FOR OBJECTS ALREADY PLACED
     var
       $asteroid = $('<div class="asteroid">'),
@@ -126,8 +136,8 @@ var $gameWindow = $('#game-window');
     this.health--;
     this.imgSize = this.imgSize*Math.sqrt(0.5);
     this.$asteroid.css({height:this.imgSize,width:this.imgSize});
-    this.velocity[0]+=1/16;
-    this.velocity[1]+=1/16;
+    this.velocity[0]+=1/8;
+    this.velocity[1]+=1/8;
     if (this.health === 0){
       this.$asteroid.remove();
       asteroids.splice(index,1);
@@ -146,6 +156,10 @@ var $gameWindow = $('#game-window');
     this.position[1] += dt*this.velocity[1];
 
   }
+  // Asteroid.prototype.clear = function(i){
+  //     this.$asteroid.remove();
+  //     asteroids[i] = {};
+  // }
   var Bullet = function(){
     this.speed = 0.5
     this.velocity = [0,0];
@@ -182,3 +196,4 @@ var $gameWindow = $('#game-window');
   var EnemyShip = function(){
     this.health = 3;
   }
+

@@ -10,16 +10,6 @@
 
 $(function(){
   spawnUserShip();
-  spawnAsteroids();
-  // $('#easy').on('click',function(){
-  //   spawnAsteroids(4);
-  // });
-  // $('#medium').on('click',function(){
-  //   spawnAsteroids(4);
-  // });
-  // $('#hard').on('click',function(){
-  //   spawnAsteroids(4);
-  // }
   setInterval(doPhysux,20);
 })
 

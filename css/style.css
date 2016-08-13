@@ -54,7 +54,7 @@ h2 {
   display: inline-block;
   margin: 0;
 }
-.airbrake{
+.airblast{
   background-image: url("../img/coffee.png");
   width: 16px;
   height: 16px;
@@ -77,11 +77,11 @@ h2 {
 }
 #game-frame{
   width: 60%;
-  height: 620px;
+  height: 650px;
   display: inline-block;
 }
 #game-window{
-  height: 600px;
+  height: 99%;
   background-image: url("../img/tmpback.jpg");
 }
 #hiscore-column{
