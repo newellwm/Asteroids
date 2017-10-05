@@ -18,6 +18,17 @@ var spawnUserShip = function(){
   eventListeners();
 }
 
+var reset = function() {
+  for ( var i = asteroids.length -1 ; i >=0 ; i -- ){
+    asteroids[i].$asteroid.remove();
+    asteroids.pop();
+  }
+  $myShip.remove();
+  $('li').remove('.health');
+  $('li').remove('.airblast');
+  spawnUserShip();
+}
+
 var eventListeners = function(){
 
   // Up
@@ -93,13 +104,6 @@ var eventListeners = function(){
     reset();
   });
 }
-var reset = function() {
-   for ( var i = asteroids.length -1 ; i >=0 ; i -- ){
-     asteroids[i].$asteroid.remove();
-     asteroids.pop();
-   }
-   myShip.heal();
-}
 
 var enableWorldWrap = function(pos,imgSize){
   var
@@ -149,9 +153,8 @@ var doPhysux = function(){
     v1 = 0,
     collision = false
     shipCheck = 0;
-    console.log(dt);
   //ACCELERATION,VELOCITY, AND POSITION CALCS FOR USER SHIP
-  //KNOWN BUG: SHIP CAN ABUSE DECCEL ON TURN TO ACCEL IN NEW DIR. FASTER
+  //KNOWN GLITCH: SHIP CAN ABUSE DECCEL ON TURN TO ACCEL IN NEW DIR.
   if (myShip.velocity[0]===0&&myShip.velocity[1]===0){
     v0 = 0;
   }else{
@@ -241,5 +244,3 @@ var doPhysux = function(){
     }
   }
 }
-
-
