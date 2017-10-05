@@ -76,23 +76,29 @@ var eventListeners = function(){
       myShip.shoot();
     }
   })
-  $('#easy').on('click',function(){
+  $('#easy').on('mouseup',function(){
+    reset();
     spawnAsteroids(4);
   });
-  $('#medium').on('click',function(){
+  $('#medium').on('mouseup',function(){
+    reset();
     spawnAsteroids(6);
   });
-  $('#hard').on('click',function(){
+  $('#hard').on('mouseup',function(){
+    reset();
     spawnAsteroids(8);
   });
 
-  $('#clear').on('click',function(){
-      for ( var i = asteroids.length -1 ; i >=0 ; i -- ){
-        asteroids[i].$asteroid.remove();
-        asteroids.pop();
-      }
-      myShip.heal();
+  $('#clear').on('mouseup',function(){
+    reset();
   });
+}
+var reset = function() {
+   for ( var i = asteroids.length -1 ; i >=0 ; i -- ){
+     asteroids[i].$asteroid.remove();
+     asteroids.pop();
+   }
+   myShip.heal();
 }
 
 var enableWorldWrap = function(pos,imgSize){
